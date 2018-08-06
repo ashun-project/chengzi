@@ -121,6 +121,7 @@ function reset(dem) {
         if (videoData.url) {
             str += '<div class="my-video"><iframe src="'+ unescape(videoData.url) +'" height="100%" width="100%" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no"></iframe></div>';
         }
+        str += '<div id="my-video-guding"></div>';
         str += '<div class="my-cont">' + content.innerHTML+'</div>';
         bodyer.innerHTML = str;
         mySpare.parentNode.removeChild(mySpare);

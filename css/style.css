@@ -241,7 +241,7 @@ body {
     width: 100%;
     margin: 0 auto;
 }
-#guding{
+.guding{
     position: absolute;
     top: 50px;
     left: 0;
