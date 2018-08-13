@@ -47,11 +47,11 @@ function convertData(data) {  
 };
 
 // detail
-let params = window.location.search.split('?');
-let defaultUrl = '';
-let bodyer = document.getElementById('bodyer');
-let mySpare = document.getElementById('my-spare');
-let videoData = {};
+var params = window.location.search.split('?');
+var defaultUrl = '';
+var bodyer = document.getElementById('bodyer');
+var mySpare = document.getElementById('my-spare');
+var videoData = {};
 if (params && params.length > 1) defaultUrl = params[1];
 getHtml(defaultUrl);
 
@@ -62,17 +62,17 @@ function getHtml(url) {
           beforeSend: function () {},
             //some js code 
         success: function (msg) {
-            let reTag = /<body[^>]*>|<\/body>|<script(?:.|\s)*?<\/script>|<iframe(?:.|\s)*?<\/iframe>/ig;
-            let cont = /<body(?:.|\s)*?<\/body>/g;
-            let script = /<script(?:.|\s)*?<\/script>/g;
-            let result = cont.exec(msg);
-            let scriptResult = msg.match(script);
-            let html = '';
+            var reTag = /<link(?:.|\s)*?>|<body[^>]*>|<\/body>|<script(?:.|\s)*?<\/script>|<iframe(?:.|\s)*?<\/iframe>/ig;
+            var cont = /<body(?:.|\s)*?<\/body>/g;
+            var script = /<script(?:.|\s)*?<\/script>/g;
+            var result = cont.exec(msg);
+            var scriptResult = msg.match(script);
+            var html = '';
             document.documentElement.scrollTop=document.body.scrollTop=0;
             if (scriptResult) {
-                let str = scriptResult.join('').replace(/\'/g, '\"');
-                let name = str.match(/mac_name=\"(?:.|\s)*?\"/g);
-                let url = str.match(/mac_url=unescape\(\"(?:.|\s)*?\"\)/g);
+                var str = scriptResult.join('').replace(/\'/g, '\"');
+                var name = str.match(/mac_name=\"(?:.|\s)*?\"/g);
+                var url = str.match(/mac_url=unescape\(\"(?:.|\s)*?\"\)/g);
                 if (name && name[0]) videoData.name = name[0].replace(/\"|mac_name=/g, '');
                 if (name && name[0]) videoData.url = url[0].replace(/\"|\)|mac_url=unescape\(/g, '');
             }
@@ -80,7 +80,7 @@ function getHtml(url) {
                 html = result[0].replace(reTag,'');
             }
             mySpare.innerHTML = html;
-            setTimeout(() => {
+            setTimeout(function() {
                 reset();
             }, 30);
         },
@@ -93,19 +93,19 @@ function getHtml(url) {
 // 去除元素
 function reset(dem) {
     // 过滤元素下载链接
-    let divEles = mySpare.children;
-    let imgs = mySpare.querySelectorAll('img');
-    let getA = mySpare.querySelectorAll('a');
+    var divEles = mySpare.children;
+    var imgs = mySpare.querySelectorAll('img');
+    var getA = mySpare.querySelectorAll('a');
     if (divEles && divEles.length) {
         // 去除a链接
         for (var i = 0; i < getA.length; i++) {
-            let href = getA[i].getAttribute('href');
+            var href = getA[i].getAttribute('href');
             getA[i].setAttribute('my-data', href);
             getA[i].removeAttribute('href');
         }
         // 添加完整的图片路径
         for (var i = 0; i < imgs.length; i++) {
-            let src = imgs[i].getAttribute('src');
+            var src = imgs[i].getAttribute('src');
             imgs[i].removeAttribute('onerror');
             if (src.indexOf('http') === -1) {
                 imgs[i].setAttribute('src', '//www.p2pzy1.com/' + src);
@@ -114,9 +114,9 @@ function reset(dem) {
                 imgs[i].parentNode.removeChild(imgs[i]);
             }
         }
-        let nav = mySpare.querySelector('#nav');
-        let content = mySpare.querySelector('.tab-content');
-        let str = '<div class="my-nav">' + nav.innerHTML + '</div>';
+        var nav = mySpare.querySelector('#nav');
+        var content = mySpare.querySelector('.tab-content');
+        var str = '<div class="my-nav">' + nav.innerHTML + '</div>';
         str += '<div class="my-title">'+ videoData.name +'</div>';
         if (videoData.url) {
             str += '<div class="my-video"><iframe src="'+ unescape(videoData.url) +'" height="100%" width="100%" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no"></iframe></div>';
@@ -127,21 +127,21 @@ function reset(dem) {
         mySpare.parentNode.removeChild(mySpare);
         getClike();
     } else {
-        reset(dem)
+        reset(dem);
     }
 }
 
 // 注册事件
 function getClike() {
-    let nav = document.querySelectorAll('.bodyer .my-nav a');
-    let content = document.querySelectorAll('.bodyer .my-cont a');
+    var nav = document.querySelectorAll('.bodyer .my-nav a');
+    var content = document.querySelectorAll('.bodyer .my-cont a');
     successContent(nav, '2');
     successContent(content, '1');
     
     function successContent(list, type) {
-        for (let i = 0; i < list.length; i++) {
+        for (var i = 0; i < list.length; i++) {
             list[i].onclick = function (event) {
-                let hrf = decodeURIComponent(this.getAttribute('my-data'));
+                var hrf = decodeURIComponent(this.getAttribute('my-data'));
                 if (type === '1') {
                     window.location.href = '/detail.html?'+hrf;
                 } else {
