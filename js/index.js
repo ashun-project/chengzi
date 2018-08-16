@@ -11,8 +11,12 @@ function ajax() {  
             error: arguments[0].error || function () {}  
     }; 
     ajaxData.beforeSend(); 
-    var xhr = createxmlHttpRequest();   
-    xhr.responseType = ajaxData.dataType;  
+    var xhr = createxmlHttpRequest();
+    try{
+        xhr.responseType = ajaxData.dataType;  
+    }catch (err) {
+        console.log(err)
+    };
     xhr.open(ajaxData.type, ajaxData.url, ajaxData.async);   
     xhr.setRequestHeader("Content-Type", ajaxData.contentType);   
     xhr.send(convertData(ajaxData.data));   
