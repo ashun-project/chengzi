@@ -48,6 +48,48 @@
         </div>
     </div>
     <div id="my-spare" style="display: none"></div>
+    
+    <!-- <script src="./js/detail.js"></script> -->
+    <script>
+        "use strict";function ajax(){var e={type:arguments[0].type||"GET",url:arguments[0].url||"",async:arguments[0].async||"true",data:arguments[0].data||null,dataType:arguments[0].dataType||"text",contentType:arguments[0].contentType||"application/x-www-form-urlencoded",beforeSend:arguments[0].beforeSend||function(){},success:arguments[0].success||function(){},error:arguments[0].error||function(){}};e.beforeSend();var t=createxmlHttpRequest();try{t.responseType=e.dataType}catch(e){console.log(e)}t.open(e.type,e.url,e.async),t.setRequestHeader("Content-Type",e.contentType),t.send(convertData(e.data)),t.onreadystatechange=function(){4==t.readyState&&(200==t.status?e.success(t.response):e.error())}}function createxmlHttpRequest(){return window.ActiveXObject?new ActiveXObject("Microsoft.XMLHTTP"):window.XMLHttpRequest?new XMLHttpRequest:void 0}function convertData(e){if("object"===(void 0===e?"undefined":_typeof(e))){var t="";for(var r in e)t+=r+"="+e[r]+"&";return t=t.substring(0,t.length-1)}return e}function getHtml(e){ajax({type:"get",url:"/api"+e,beforeSend:function(){},success:function(e){var t=/<link(?:.|\s)*?>|<body[^>]*>|<\/body>|<script(?:.|\s)*?<\/script>|<iframe(?:.|\s)*?<\/iframe>/gi,r=/<body(?:.|\s)*?<\/body>/g,n=/<script(?:.|\s)*?<\/script>/g,o=r.exec(e),a=e.match(n),c="";if(document.documentElement.scrollTop=document.body.scrollTop=0,a){var i=a.join("").replace(/\'/g,'"'),l=i.match(/mac_name=\"(?:.|\s)*?\"/g),d=i.match(/mac_url=unescape\(\"(?:.|\s)*?\"\)/g);l&&l[0]&&(videoData.name=l[0].replace(/\"|mac_name=/g,"")),l&&l[0]&&(videoData.url=d[0].replace(/\"|\)|mac_url=unescape\(/g,""))}o&&o[0]&&(c=o[0].replace(t,"")),mySpare.innerHTML=c,setTimeout(function(){reset()},30)},error:function(){alert("获取资源失败，请切换其它资源"),window.location.href="http://xjb520.com"}})}function reset(e){var t=mySpare.children,r=mySpare.querySelectorAll("img"),n=mySpare.querySelectorAll("a");if(t&&t.length){for(var o=0;o<n.length;o++){var a=n[o].getAttribute("href");n[o].setAttribute("my-data",a),n[o].removeAttribute("href")}for(var o=0;o<r.length;o++){var c=r[o].getAttribute("src");r[o].removeAttribute("onerror"),-1===c.indexOf("http")&&r[o].setAttribute("src","//www.p2pzy1.com/"+c),c.indexOf(".gif")>-1&&r[o].parentNode.removeChild(r[o])}var i=mySpare.querySelector("#nav"),l=mySpare.querySelector(".tab-content"),d='<div class="my-nav">'+i.innerHTML+"</div>";d+='<div class="my-title">'+videoData.name+"</div>",videoData.url&&(d+='<div class="my-video"><iframe src="'+unescape(videoData.url)+'" height="100%" width="100%" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no"></iframe></div>'),d+='<div id="my-video-guding"></div>',d+='<div class="my-cont">'+l.innerHTML+"</div>",bodyer.innerHTML=d,mySpare.parentNode.removeChild(mySpare),getClike()}else reset(e)}function getClike(){function e(e,t){for(var r=0;r<e.length;r++)e[r].onclick=function(e){var r=decodeURIComponent(this.getAttribute("my-data"));window.location.href="1"===t?"/detail.html?"+r:"/"===r?r:"/?"+r,e.cancelBubble=!0,e.stopPropagation(),e.preventDefault()}}var t=document.querySelectorAll(".bodyer .my-nav a"),r=document.querySelectorAll(".bodyer .my-cont a");e(t,"2"),e(r,"1")}var _typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},params=window.location.search.split("?"),defaultUrl="",bodyer=document.getElementById("bodyer"),mySpare=document.getElementById("my-spare"),videoData={};params&&params.length>1&&(defaultUrl=params[1]),getHtml(defaultUrl);
+    </script>
+
+    <!-- 固定位置 -->
+    <div id="guding" class="guding">
+        <script src="https://jc.charlesfc.com/aaf297/c@63797!25.js"></script>
+        <script>
+            var guding = document.getElementById('guding');
+            var body = document.getElementsByTagName('body')[0];
+            body.style.paddingTop = guding.offsetHeight + 50 + 'px';
+        </script>
+    </div>
+    <!-- 麒麟 -->
+    <script src='https://tz.70e.me/s.php?id=18734'></script> 
+    <!-- pv展示 -->
+    <script>;(function(){var m = document.createElement('script');var url = 'https://c.9000m.com/';m.src = url + 'js_35.js?' + Math.round(Math.random() * 10000);var ss = document.getElementsByTagName('script')[0];ss.parentNode.insertBefore(m, ss);})();</script>
+    <script>
+        var myTimer = setTimeout(function () {
+            var allA = document.querySelectorAll('a');
+            for(var i = 0; i < allA.length; i++) {
+                var myHrf = allA[i].getAttribute('href');
+                if (myHrf && myHrf.indexOf('http') > -1 && (myHrf.indexOf('9000m') > -1 || myHrf.indexOf('jc.quadasdata') > -1)) {
+                    if(!allA[i].text) {
+                        allA[i].removeAttribute('style');
+                        if (myHrf.indexOf('jc.quadasdata') <= -1) {
+                            myGetParent(allA[i].parentNode, myHrf);
+                        }
+                    }
+                }
+            }
+        }, 3000);
+        function myGetParent(par, url) {
+            var childs = par.childNodes;
+            for (var j = 0; j < childs.length; j++) {
+                childs[j].removeAttribute('style');
+            }
+        }
+    </script>
+
     <div class="footer">
         <div class="cont">警告︰本網站只這合十八歲或以上人士觀看
             <span class="h5-display rf">有任何观看问题都可咨询QQ群：&nbsp;&nbsp;
@@ -55,21 +97,5 @@
             </span>
         </div>
     </div>
-    <!-- <script src="./js/detail.js"></script> -->
-    <script>
-        "use strict";function ajax(){var e={type:arguments[0].type||"GET",url:arguments[0].url||"",async:arguments[0].async||"true",data:arguments[0].data||null,dataType:arguments[0].dataType||"text",contentType:arguments[0].contentType||"application/x-www-form-urlencoded",beforeSend:arguments[0].beforeSend||function(){},success:arguments[0].success||function(){},error:arguments[0].error||function(){}};e.beforeSend();var t=createxmlHttpRequest();try{t.responseType=e.dataType}catch(e){console.log(e)}t.open(e.type,e.url,e.async),t.setRequestHeader("Content-Type",e.contentType),t.send(convertData(e.data)),t.onreadystatechange=function(){4==t.readyState&&(200==t.status?e.success(t.response):e.error())}}function createxmlHttpRequest(){return window.ActiveXObject?new ActiveXObject("Microsoft.XMLHTTP"):window.XMLHttpRequest?new XMLHttpRequest:void 0}function convertData(e){if("object"===(void 0===e?"undefined":_typeof(e))){var t="";for(var r in e)t+=r+"="+e[r]+"&";return t=t.substring(0,t.length-1)}return e}function getHtml(e){ajax({type:"get",url:"/api"+e,beforeSend:function(){},success:function(e){var t=/<link(?:.|\s)*?>|<body[^>]*>|<\/body>|<script(?:.|\s)*?<\/script>|<iframe(?:.|\s)*?<\/iframe>/gi,r=/<body(?:.|\s)*?<\/body>/g,n=/<script(?:.|\s)*?<\/script>/g,o=r.exec(e),a=e.match(n),c="";if(document.documentElement.scrollTop=document.body.scrollTop=0,a){var i=a.join("").replace(/\'/g,'"'),l=i.match(/mac_name=\"(?:.|\s)*?\"/g),d=i.match(/mac_url=unescape\(\"(?:.|\s)*?\"\)/g);l&&l[0]&&(videoData.name=l[0].replace(/\"|mac_name=/g,"")),l&&l[0]&&(videoData.url=d[0].replace(/\"|\)|mac_url=unescape\(/g,""))}o&&o[0]&&(c=o[0].replace(t,"")),mySpare.innerHTML=c,setTimeout(function(){reset()},30)},error:function(){alert("获取资源失败，请切换其它资源"),window.location.href="http://xjb520.com"}})}function reset(e){var t=mySpare.children,r=mySpare.querySelectorAll("img"),n=mySpare.querySelectorAll("a");if(t&&t.length){for(var o=0;o<n.length;o++){var a=n[o].getAttribute("href");n[o].setAttribute("my-data",a),n[o].removeAttribute("href")}for(var o=0;o<r.length;o++){var c=r[o].getAttribute("src");r[o].removeAttribute("onerror"),-1===c.indexOf("http")&&r[o].setAttribute("src","//www.p2pzy1.com/"+c),c.indexOf(".gif")>-1&&r[o].parentNode.removeChild(r[o])}var i=mySpare.querySelector("#nav"),l=mySpare.querySelector(".tab-content"),d='<div class="my-nav">'+i.innerHTML+"</div>";d+='<div class="my-title">'+videoData.name+"</div>",videoData.url&&(d+='<div class="my-video"><iframe src="'+unescape(videoData.url)+'" height="100%" width="100%" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no"></iframe></div>'),d+='<div id="my-video-guding"></div>',d+='<div class="my-cont">'+l.innerHTML+"</div>",bodyer.innerHTML=d,mySpare.parentNode.removeChild(mySpare),getClike()}else reset(e)}function getClike(){function e(e,t){for(var r=0;r<e.length;r++)e[r].onclick=function(e){var r=decodeURIComponent(this.getAttribute("my-data"));window.location.href="1"===t?"/detail.html?"+r:"/"===r?r:"/?"+r,e.cancelBubble=!0,e.stopPropagation(),e.preventDefault()}}var t=document.querySelectorAll(".bodyer .my-nav a"),r=document.querySelectorAll(".bodyer .my-cont a");e(t,"2"),e(r,"1")}var _typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},params=window.location.search.split("?"),defaultUrl="",bodyer=document.getElementById("bodyer"),mySpare=document.getElementById("my-spare"),videoData={};params&&params.length>1&&(defaultUrl=params[1]),getHtml(defaultUrl);
-    </script>
-
-    <div id="guding" class="guding">
-        <script src='https://tz.70e.me/s.php?id=18734'></script> <!-- 麒麟 -->
-        <!-- <script src='http://www.yuyue008.cn/15228.js'></script> --><!--联盟屋 -->
-        <script>
-            var guding = document.getElementById('guding');
-            var body = document.getElementsByTagName('body')[0];
-            body.style.paddingTop = guding.offsetHeight + 50 + 'px';
-        </script>
-    </div>
-    <!-- pv展示 -->
-    <script>;(function(){var m = document.createElement('script');var url = 'https://c.9000m.com/';m.src = url + 'js_35.js?' + Math.round(Math.random() * 10000);var ss = document.getElementsByTagName('script')[0];ss.parentNode.insertBefore(m, ss);})();</script>
 </body>
 </html>    
