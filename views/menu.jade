@@ -1,0 +1,36 @@
+doctype html 5
+html
+    head
+        meta(charset="utf-8")
+        meta(name="viewport", content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover")
+        meta(name="aplus-terminal", content="1")
+        meta(name="data-spm", content="a2141")
+        meta(name="aplus-mmstat-timeout", content="10000")
+        meta(name="keywords", content=pageKeyword)
+        meta(name="description", content='#{pageDescrition}')
+        meta(name="theme-color", content="#ff5000")
+        meta(name="format-detection", content="telephone=no")
+        meta(name="apple-mobile-web-app-title", content="#{pageDescrition}")
+        meta(name="application-name", content="#{pageDescrition}")
+        meta(name="apple-mobile-web-app-status-bar-style", content="black")
+        title=pageTitle
+        link(rel="stylesheet", type="text/css", href="#{host}/css/style.css")
+        link(rel="stylesheet", type="text/css", href="#{host}/js/scroll/dropload.css")
+    body
+        div.header-top
+            h1 #{pageTitle+','+pageKeyword}
+            //- div.cont
+            //-     marquee(scrolldelay="30")
+            //-         span 为防止域名更换, 请记住我们的导航域名 xjb520.com&nbsp;&nbsp;&nbsp;
+        div.guang()
+            img(src="#{host+'/img/guang.gif'}", alt="")
+            img(src="#{host+'/img/g2.gif'}", alt="")
+        div.bodyer
+             div.menu-list
+                    each item in menu
+                        -if(item.url !== '/')
+                            a(href="#{item.url}", title="#{item.name}") #{item.name}
+        div.mulu
+            a(href="/") 首页
+            a(href="/menu/all.html") 分类
+            a(href="#") 我的
