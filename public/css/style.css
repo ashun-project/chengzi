@@ -360,6 +360,43 @@ body{
         
     }
 }
+.tip-go-app {
+    position: fixed;
+    bottom: 2.4rem;
+    left: 0;
+    width: 100%;
+    height: 2.4rem;
+    background: rgba(0, 0, 0, 0.56);
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    padding-right: 1.5rem;
+    z-index: 200;
+    color: #fff;
+}
+.tip-go-app img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: auto;
+    max-width: 1.2rem;
+}
+.tip-go-app a {
+    display: block;
+    height: 1.5rem;
+    line-height: 1.5rem;
+    border-radius: 3px;
+    padding: 0 .5rem;
+    background: #fb3d17;
+    margin-left: 2rem;
+    color: #fff;
+}
 @media screen and (max-width: 500px) {
     
 }
