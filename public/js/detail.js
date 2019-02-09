@@ -6,3 +6,11 @@ var videoObject = {
     video: document.getElementById('video-url').value
 };
 var player = new ckplayer(videoObject);
+var banner = document.querySelector('.banner');
+var img = document.querySelector('.swiper-wrapper .swiper-slide img');
+banner.style.height = img.height;
+var mySwiper = new Swiper('.swiper-container',{
+    loop: true,
+    autoplay: 5000,
+    pagination : '.swiper-pagination'
+});

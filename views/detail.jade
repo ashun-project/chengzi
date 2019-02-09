@@ -16,6 +16,7 @@ html
         meta(name="referrer", content="never")
         title=pageTitle
         link(rel="stylesheet", type="text/css", href="#{host}/css/style.css")
+        link(rel="stylesheet", type="text/css", href="#{host}/css/swiper.min.css")
     body
         div.header-top
             h1 #{pageTitle+','+pageKeyword}
@@ -32,6 +33,16 @@ html
                     //- a(title="登录") 登录
                     //- a(title="注册") 注册
                 div.shadow
+        div.banner
+            div.swiper-container
+                div.swiper-wrapper
+                    div.swiper-slide.blue-slide 
+                        img(src="#{host}/img/1.png", alt="")
+                    div.swiper-slide.red-slide
+                        img(src="#{host}/img/2.png", alt="")
+                    div.swiper-slide.orange-slide
+                        img(src="#{host}/img/3.png", alt="")
+                div.swiper-pagination
         div.go-back
             a(href="javascript:history.back(-1)") &lt;&nbsp;返回
             span 当前分类：#{typeText.name}
@@ -40,9 +51,6 @@ html
             //-         input(id="video-type", type="hidden", value="#{type}")
             //-         input(type="text", id="search-value", placeholder="只在当前分类-进行检索", onkeyup="getSearchKeyup()")
             //-         button(onclick="getSearch()") 搜&nbsp;&nbsp;索
-        div.guang()
-            img(src="#{host+'/img/guang.gif'}", alt="")
-            img(src="#{host+'/img/g2.gif'}", alt="")
         div.bodyer
             div.data-detail
                 -if(result)
@@ -66,8 +74,15 @@ html
             br
             |WARNING: This Site Contains Adult Contents, No Entry For Less Than 18-Years-Old !
         div.mulu
-            a(href="/") 首页
-            a(href="/menu/all.html") 分类
-            a(href="#") 我的
+            div
+                img(src="#{host+'/img/home.png'}", alt="")
+                a(href="/") 首页
+            div
+                img(src="#{host+'/img/fen_c.png'}", class="fen", alt="")
+                a(href="/menu/all.html",class="active") 分类
+            div
+                img(src="#{host+'/img/mine.png'}", class="mine", alt="")
+                a(href="/mine/mine.html") 我的
         script(src="#{host}/js/ckplayer/ckplayer.js")
+        script(src="#{host}/js/swiper.min.js")
         script(src="#{host}/js/detail.js", type="text/javascript")

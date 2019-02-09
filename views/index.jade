@@ -15,6 +15,7 @@ html
         meta(name="apple-mobile-web-app-status-bar-style", content="black")
         title=pageTitle
         link(rel="stylesheet", type="text/css", href="#{host}/css/style.css")
+        link(rel="stylesheet", type="text/css", href="#{host}/css/swiper.min.css")
     body
         div.header-top
             h1 #{pageTitle+','+pageKeyword}
@@ -22,18 +23,25 @@ html
             //-     marquee(scrolldelay="30")
             //-         span 为防止域名更换, 请记住我们的导航域名 xjb520.com&nbsp;&nbsp;&nbsp;
         div.header
-                div.cont
-                    each item in menu
-                        -if(item.url === '/')
-                            a(href="#{item.url}", class="active", title="#{item.name}") #{item.name}
-                        -else
-                            a(href="#{item.url}", title="#{item.name}") #{item.name}
-                    //- span(title="登录") 登录
-                    //- span(title="注册") 注册
-                div.shadow
-        div.guang()
-            img(src="#{host+'/img/guang.gif'}", alt="")
-            img(src="#{host+'/img/g2.gif'}", alt="")
+            div.cont
+                each item in menu
+                    -if(item.url === '/')
+                        a(href="#{item.url}", class="active", title="#{item.name}") #{item.name}
+                    -else
+                        a(href="#{item.url}", title="#{item.name}") #{item.name}
+                //- span(title="登录") 登录
+                //- span(title="注册") 注册
+            div.shadow
+        div.banner
+            div.swiper-container
+                div.swiper-wrapper
+                    div.swiper-slide.blue-slide 
+                        img(src="#{host}/img/1.png", alt="")
+                    div.swiper-slide.red-slide
+                        img(src="#{host}/img/2.png", alt="")
+                    div.swiper-slide.orange-slide
+                        img(src="#{host}/img/3.png", alt="")
+                div.swiper-pagination
         div.bodyer
             -if(result)
                 each item in result
@@ -50,11 +58,27 @@ html
             -else
                 a(href="#{host}", class="no-more" title="返回首页") 页面出错，请刷新页面或联系管理员！
         div.mulu
-            a(href="/") 首页
-            a(href="/menu/all.html") 分类
-            a(href="#") 我的
+            div
+                img(src="#{host+'/img/home_c.png'}", alt="")
+                a(href="/",class="active") 首页
+            div
+                img(src="#{host+'/img/fen.png'}", class="fen", alt="")
+                a(href="/menu/all.html") 分类
+            div
+                img(src="#{host+'/img/mine.png'}", class="mine", alt="")
+                a(href="/mine/mine.html") 我的
         div.footer
             | 警告︰69公社-69gs.tv-69公社在线视频-69gs Porn videos（www.69gs.tv）只适合18岁或以上人士观看!
             br
             |WARNING: This Site Contains Adult Contents, No Entry For Less Than 18-Years-Old !
         script(src="#{host}/js/common.js", type="text/javascript")
+        script(src="#{host}/js/swiper.min.js")
+        script(type="text/javascript").
+            var banner = document.querySelector('.banner');
+            var img = document.querySelector('.swiper-wrapper .swiper-slide img');
+            banner.style.height = img.height;
+            var mySwiper = new Swiper('.swiper-container',{
+                loop: true,
+                autoplay: 5000,
+                pagination : '.swiper-pagination'
+            });

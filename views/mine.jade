@@ -1,0 +1,99 @@
+doctype html 5
+html
+    head
+        meta(charset="utf-8")
+        meta(name="viewport", content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover")
+        meta(name="aplus-terminal", content="1")
+        meta(name="data-spm", content="a2141")
+        meta(name="aplus-mmstat-timeout", content="10000")
+        meta(name="keywords", content=pageKeyword)
+        meta(name="description", content='#{pageDescrition}')
+        meta(name="theme-color", content="#ff5000")
+        meta(name="format-detection", content="telephone=no")
+        meta(name="apple-mobile-web-app-title", content="#{pageDescrition}")
+        meta(name="application-name", content="#{pageDescrition}")
+        meta(name="apple-mobile-web-app-status-bar-style", content="black")
+        title=pageTitle
+        link(rel="stylesheet", type="text/css", href="#{host}/css/style.css")
+    body
+        div.header-top
+            h1 #{pageTitle+','+pageKeyword}
+            //- div.cont
+            //-     marquee(scrolldelay="30")
+            //-         span 为防止域名更换, 请记住我们的导航域名 xjb520.com&nbsp;&nbsp;&nbsp;
+        div.mine-bc
+            img(src="#{host+'/img/bc.png'}", alt="")
+        div.mine-body
+            div.mine-cont
+                div.mine-tu
+                    img(src="", alt="")
+                div.mine-c
+                    span VIP兑换
+                    -if(user)
+                        span.rf #{user.username}
+                    -else
+                        span.rf(onclick="showMOdel('login')") 登入
+                    div.por
+                        img(src="#{host+'/img/por.png'}", alt="")
+                div.mine-menu
+                    //- p 基本信息
+                    -if(user)
+                        p(onclick="showMOdel('spread')") 我要推广
+                    -else
+                        p(onclick="alert('请先登陆')") 我要推广
+                    -if(user)
+                        div.out(onclick="outLogin()") 退出
+            div.mine-ban
+                img(src="#{host+'/img/3.png'}", alt="")
+        div.mulu
+            div
+                img(src="#{host+'/img/home.png'}", alt="")
+                a(href="/") 首页
+            div
+                img(src="#{host+'/img/fen.png'}", class="fen", alt="")
+                a(href="/menu/all.html") 分类
+            div
+                img(src="#{host+'/img/mine_c.png'}", class="mine", alt="")
+                a(href="/mine/mine.html",class="active") 我的
+        div.modal.my-login
+            span.close(onclick='closeModal()') X
+            h6.modal-tite Wellcome
+            div.modal-body
+                form#login-form(action='')
+                    input(type='text', name='userName', placeholder='用户名')
+                    |  
+                    input(type='password', name='password', placeholder='密码')
+            div.modal-foot
+                button(onclick='getLogin()') &#x767B;&nbsp;&nbsp;&nbsp;&#x5F55;
+                p
+                    font(color='red') &#x8FD8;&#x6CA1;&#x6709;&#x8D26;&#x53F7;&#x5417;&#xFF1F;
+                    span(onclick='showMOdel("register")')
+                        font(color='#1ab394') &#x53BB;&#x6CE8;&#x518C;
+        div.modal.my-register
+            span.close(onclick='closeModal()') X
+            h6.modal-tite Wellcome
+            div.modal-body
+                form#register-form(action='')
+                    input(type='text', name='userName', placeholder='用户名')
+                    |  
+                    input(type='password', name='password', placeholder='密码')
+                    |  
+                    input(type='password', name='vaidPassword', placeholder='确认密码')
+            div.modal-foot
+                button(onclick='getRegister()') &#x6CE8;&nbsp;&nbsp;&nbsp;&#x518C;
+                p
+                    font(color='red') &#x5DF2;&#x6709;&#x8D26;&#x53F7;&#x5417;&#xFF1F;
+                    span(onclick='showMOdel("login")')
+                        font(color='#1ab394') &#x53BB;&#x767B;&#x5165;
+        -if(user)
+            div.modal.my-spread
+                span.close(onclick='closeModal()') X
+                div.modal-body
+                    br
+                    p 复制下方链接发送给好友，推广10人即可观看5部电影
+                    br
+                    textarea#copy-cont(name="", cols="30", rows="10") #{host+'?user='+user.username}
+                    br
+                    button(onclick="goCopy()") 复&nbsp;&nbsp;&nbsp;制 
+        div#mask.mask
+        script(src="#{host}/js/mine.js", type="text/javascript")

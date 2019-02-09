@@ -232,7 +232,18 @@ router.get('/detail/:type/:id', function (req, res) {
         });
     })
 })
-
+router.get('/mine/:me', function (req, res) {
+    var user = req.session.loginUser;
+    var listObj = {
+        pageTitle: '我的-茄子',
+        pageKeyword: '茄子/茄子有你,, ady, ady在线, 茄子, 奸臣 韩国在线观看, 韩国表妹2017在线观看',
+        pageDescrition: '茄子/茄子有你,, ady, ady在线, 茄子, 奸臣 韩国在线观看, 韩国表妹2017在线观看',
+        host: 'http://'+req.headers['host'],
+        menu: menu,
+        user: user
+    }
+    res.render('mine', listObj);
+});
 
 router.get('*', function (req, res, next) {
     var listObj = {
@@ -243,6 +254,97 @@ router.get('*', function (req, res, next) {
     }
     res.status(404);
     res.render('404', listObj);
+});
+
+
+function vaidParams(userName, password) {
+    var error = '';
+    if (!userName || !password) {
+        error = '用户或密码不能为空';
+    }
+    if (userName.length > 12 || password.length > 12) {
+        error = '用户或密码不可超过12位';
+    }
+    if (userName.length < 3 || password.length < 3) {
+        error = '用户或密码不可小于3位';
+    }
+    return error;
+}
+
+router.post('/register', function (req, res) {
+    var userName = req.body.userName? req.body.userName.replace(/\s+/g, "") : '';
+    var err = vaidParams(userName, req.body.password);
+    var sql = 'SELECT * FROM user where username = "'+ userName + '"';
+    var sql2 = "INSERT INTO user(username, password, ip) VALUES (?, ?, ?)";
+    if (err) {
+        res.json({error: err});
+        return;
+    }
+    pool.getConnection(function (err, conn) {
+        if (err) console.log("POOL register==> " + err);
+        conn.query(sql, function (err, result) {
+            if (err) {
+                console.log('register - ', err.message);
+                res.json({error: '系统出错请重新操作'});
+                conn.release();
+            } else {
+                if (!result[0]) {
+                    conn.query(sql2, [userName, req.body.password, ''], function (err1, result1) {
+                        if (err1) {
+                            console.log('register1- ', err1.message);
+                            res.json({error: '系统出错请重新操作2'});
+                        }  else {
+                            req.session.loginUser = {username: userName};
+                            res.json({userName: userName});
+                        }
+                        conn.release();
+                    });
+                } else {
+                    res.json({error: '用户已存在'});
+                    conn.release();
+                }
+            }
+        });
+    });
+});
+
+router.post('/login', function (req, res, next) {
+    // 获取所有列表
+    var userName = req.body.userName? req.body.userName.replace(/(^\s*)|(\s*$)/g, "") : '';
+    var err = vaidParams(userName, req.body.password);
+    var sql = 'SELECT * FROM user where username = "'+ userName + '"';
+    if (err) {
+        res.json({error: err});
+        return;
+    }
+    pool.getConnection(function (err, conn) {
+        if (err) console.log("POOL login==> " + err);
+        conn.query(sql, function (err, result) {
+            if (err) {
+                console.log('login--', err.message);
+                res.json({error: '系统出错请重新操作'});
+            } else {
+                if (result.length) {
+                    if (req.body.password === result[0].password) {
+                        delete result[0].password;
+                        req.session.loginUser = result[0];
+                        res.json(result[0]);
+                    } else {
+                        res.json({error: '用户或密码不正确'});
+                    }
+                } else {
+                    res.json({error: '用户不存在'});
+                }
+            }
+            conn.release();
+        });
+    });
+});
+
+router.post('/logout', function (req, res, next) {
+    req.session.loginUser = null;
+    res.clearCookie('testapp');
+    res.json({success:'退出成功'});
 });
 
 module.exports = router;

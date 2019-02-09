@@ -16,5 +16,4 @@ if (isMobile && window.location.host.indexOf('app') <= -1) {
     div.querySelector('img').onclick = function () {
         div.parentNode.removeChild(div);
     }
-       
 }
