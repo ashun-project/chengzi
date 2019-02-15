@@ -13,72 +13,108 @@ html
         meta(name="apple-mobile-web-app-title", content="#{pageDescrition}")
         meta(name="application-name", content="#{pageDescrition}")
         meta(name="apple-mobile-web-app-status-bar-style", content="black")
+        meta(name="referrer", content="never")
         title=pageTitle
         link(rel="stylesheet", type="text/css", href="#{host}/css/style.css")
-        link(rel="stylesheet", type="text/css", href="#{host}/css/swiper.min.css")
     body
-        div.header-top
-            h1 #{pageTitle+','+pageKeyword}
-            //- div.cont
-            //-     marquee(scrolldelay="30")
-            //-         span 为防止域名更换, 请记住我们的导航域名 xjb520.com&nbsp;&nbsp;&nbsp;
         div.header
-            div.cont
-                each item in menu
-                    -if(item.url === '/')
-                        a(href="#{item.url}", class="active", title="#{item.name}") #{item.name}
-                    -else
-                        a(href="#{item.url}", title="#{item.name}") #{item.name}
-                //- span(title="登录") 登录
-                //- span(title="注册") 注册
-            div.shadow
-        div.banner
-            div.swiper-container
-                div.swiper-wrapper
-                    div.swiper-slide.blue-slide 
-                        img(src="#{host}/img/1.png", alt="")
-                    div.swiper-slide.red-slide
-                        img(src="#{host}/img/2.png", alt="")
-                    div.swiper-slide.orange-slide
-                        img(src="#{host}/img/3.png", alt="")
-                div.swiper-pagination
+            div.head-cont
+                div.head-logo.lf
+                    h1=pageKeyword
+                    a(href="http://www.8llh.com", target="_blank", title="萝莉网红永久访问地址")
+                        span 永久域名|
+                        //- br
+                        strong PUSSYFUCKING1.COM
+                //- div.head-menu.lf
+                //-     each item in menuList
+                //-         a(href="#{item.url}", title="#{item.title}在线列表") #{item.title}
+                -if(!userInfo)
+                    div.head-user.rf
+                        span(onclick="showMOdel('login')") 登入
+                        span(onclick="showMOdel('register')") 注册
+                -else
+                    div#logined.head-user.rf
+                        //- span.refresh(onclick='getRefresh()')
+                        //-     | &nbsp;
+                        //-     img(src="#{host+'/img/refresh.png'}", alt="刷新登入")
+                        span
+                            a(href="#{host+'/user/info'}", target="_blank") 个人中心       
+                        span(onclick="outLogin()")  退出
+        div.search
+            div.search-cont
+                input(type="text", id="search-value", placeholder="搜索-有你想要   如：萝莉", onkeyup="getSearchKeyup()")
+                button(onclick="search()") 搜&nbsp;&nbsp;索
+            //- div.notice
+                //- div#notice-cont
+                //-     each item in marqueeList
+                //-         p=item
         div.bodyer
-            -if(result)
-                each item in result
-                    div.go-more
-                        h2 #{item.name}
-                            a(href="/list/#{item.type}.html", title="#{item.name}列表") 更多&nbsp;&gt;
-                    div.data-list
-                        each vv in item.list
-                            a(href="#{host+'/detail/'+vv.type+'/'+vv.createTime}.html", title="#{vv.title}在线观看")
-                                div.list-img
-                                    img(src="#{vv.img.split(',')[0]}", alt="#{vv.title}")
-                                div.list-title
-                                    span #{vv.title}
-            -else
-                a(href="#{host}", class="no-more" title="返回首页") 页面出错，请刷新页面或联系管理员！
-        div.mulu
-            div
-                img(src="#{host+'/img/home_c.png'}", alt="")
-                a(href="/",class="active") 首页
-            div
-                img(src="#{host+'/img/fen.png'}", class="fen", alt="")
-                a(href="/menu/all.html") 分类
-            div
-                img(src="#{host+'/img/mine.png'}", class="mine", alt="")
-                a(href="/mine/mine.html") 我的
+            div.list
+                -if(listData.length)
+                    each item in listData
+                        a(href="#{host+'/detail/'+item.createTime}", title="#{item.title}在线观看", target="_blank")
+                            div
+                                img(src="#{item.img}", alt="#{item.title}")
+                            div.list-title
+                                strong #{item.title.replace(/[在线]|【在线】/, '')}
+                -else
+                    a(href="#{host}", class="no-more" title="返回首页") 没有查询到数据，返回首页？
+        div.page !{page}
+            //- span.current-page 当前弟"&nbsp;#{currentPage}&nbsp;"页&nbsp;&nbsp;搜索条件"&nbsp;#{titlePage || '无'}&nbsp;"
+            //- each item in page
+            //-     -if(item.active)
+            //-         span(class="#{item.active}") #{item.label}
+            //-     -else
+            //-         a(href="#{host+'/'+item.url}", title="#{item.label}") #{item.label}
+        div.recommend
+            h3 随机推荐 &gt;
+            ul
+                each item in recommend
+                    li
+                        a(href="#{host+'/detail/'+item.createTime}", title="#{item.title}", target="_blank") #{item.title.replace(/[在线]|【在线】/, '')}
         div.footer
-            | 警告︰69公社-69gs.tv-69公社在线视频-69gs Porn videos（www.69gs.tv）只适合18岁或以上人士观看!
-            br
-            |WARNING: This Site Contains Adult Contents, No Entry For Less Than 18-Years-Old !
+            | 欢迎来到&nbsp;
+            a(href="http://8llh.com", title="http://8llh.com")
+                strong PUSSYFUCKing1.COM&nbsp;
+            | 未满18岁禁止进入
+            div(style="display:none")
+                span 备用地址：
+                a(href="http://www.llh8.cn", title="http://www.llh8.cn") www.llh8.cn
+                a(href="http://llh8.cn", title="http://llh8.cn") llh8.cn
+                a(href="http://www.llh8.me", title="http://www.llh8.cn") www.llh8.me
+                a(href="http://llh8.me", title="http://llh8.cn") llh8.me
+                a(href="http://www.8llh.com", title="http://www.8llh.com") www.8llh.com
+                a(href="http://8llh.com", title="http://8llh.com") 8llh.com
+                a(href="http://www.cz1990.com", title="http://www.cz1990.com") www.cz1990.com
+                a(href="http://cz1990.com", title="http://cz1990.com") cz1990.com
+                a(href="http://xjb666.xyz", title="http://xjb666.xyz") xjb666.xyz
+                a(href="http://www.xjb666.xyz", title="http://xjb666.xyz") www.xjb666.xyz
+                a(href="http://xjb888.xyz", title="http://xjb888.xyz") xjb888.xyz
+                a(href="http://www.xjb888.xyz", title="http://xjb888.xyz") www.xjb888.xyz
+                a(href="http://ashun520.com", title="http://ashun520.com") ashun520.com
+                a(href="http://www.ashun520.com", title="http://www.ashun520.com") www.ashun520.com
+                a(href="http://ashun1.com", title="http://ashun1.com") ashun1.com
+                a(href="http://www.ashun1.com", title="http://www.ashun1.com") www.ashun1.com
+                a(href="http://1992tv.com", title="http://1992tv.com") 1992tv.com
+                a(href="http://www.1992tv.com", title="http://www.1992tv.com") www.1992tv.com
+                a(href="http://llh1.xyz", title="http://llh1.xyz") llh1.xyz
+                a(href="http://www.llh1.xyz", title="http://www.llh1.xyz") www.llh1.xyz
+                a(href="http://llh2.xyz", title="http://llh2.xyz") llh2.xyz
+                a(href="http://www.llh2.xyz", title="http://www.llh2.xyz") www.llh2.xyz
+                a(href="http://llh3.xyz", title="http://llh3.xyz") llh3.xyz
+                a(href="http://www.llh3.xyz", title="http://www.llh3.xyz") www.llh3.xyz
+                a(href="http://llh4.xyz", title="http://llh4.xyz") llh4.xyz
+                a(href="http://www.llh4.xyz", title="http://www.llh4.xyz") www.llh4.xyz
+                a(href="http://llh5.xyz", title="http://llh5.xyz") llh5.xyz
+                a(href="http://www.llh5.xyz", title="http://www.llh5.xyz") www.llh5.xyz
+                a(href="http://llh6.xyz", title="http://llh6.xyz") llh6.xyz
+                a(href="http://www.llh6.xyz", title="http://www.llh6.xyz") www.llh6.xyz
+                a(href="http://llh7.xyz", title="http://llh7.xyz") llh7.xyz
+                a(href="http://www.llh7.xyz", title="http://www.llh7.xyz") www.llh7.xyz
+                a(href="http://llh8.xyz", title="http://llh8.xyz") llh8.xyz
+                a(href="http://www.llh8.xyz", title="http://www.llh8.xyz") www.llh8.xyz
+                a(href="http://llh9.xyz", title="http://llh9.xyz") llh9.xyz
+                a(href="http://www.llh9.xyz", title="http://www.llh9.xyz") www.llh9.xyz
+        div#mask.mask
         script(src="#{host}/js/common.js", type="text/javascript")
-        script(src="#{host}/js/swiper.min.js")
-        script(type="text/javascript").
-            var banner = document.querySelector('.banner');
-            var img = document.querySelector('.swiper-wrapper .swiper-slide img');
-            banner.style.height = img.height;
-            var mySwiper = new Swiper('.swiper-container',{
-                loop: true,
-                autoplay: 5000,
-                pagination : '.swiper-pagination'
-            });
+        div(style="display:none")

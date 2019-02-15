@@ -10,79 +10,72 @@ html
         meta(name="description", content='#{pageDescrition}')
         meta(name="theme-color", content="#ff5000")
         meta(name="format-detection", content="telephone=no")
+        meta(name="referrer", content="never")
         meta(name="apple-mobile-web-app-title", content="#{pageDescrition}")
         meta(name="application-name", content="#{pageDescrition}")
-        meta(name="apple-mobile-web-app-status-bar-style", content="black")
-        meta(name="referrer", content="never")
+        meta(name="apple-mobile-web-app-status-bar-style", content="black")  
         title=pageTitle
         link(rel="stylesheet", type="text/css", href="#{host}/css/style.css")
-        link(rel="stylesheet", type="text/css", href="#{host}/css/swiper.min.css")
     body
-        div.header-top
-            h1 #{pageTitle+','+pageKeyword}
-            //- div.cont
-            //-     marquee(scrolldelay="30")
-            //-         span 为防止域名更换, 请记住我们的导航域名 xjb520.com&nbsp;&nbsp;&nbsp;
         div.header
-                div.cont
-                    each item in menu
-                        -if(item.url.indexOf(type) > -1)
-                            a(href="#{item.url}", class="active", title="#{item.name}") #{item.name}
-                        -else
-                            a(href="#{item.url}", title="#{item.name}") #{item.name}
-                    //- a(title="登录") 登录
-                    //- a(title="注册") 注册
-                div.shadow
-        div.banner
-            div.swiper-container
-                div.swiper-wrapper
-                    div.swiper-slide.blue-slide 
-                        img(src="#{host}/img/1.png", alt="")
-                    div.swiper-slide.red-slide
-                        img(src="#{host}/img/2.png", alt="")
-                    div.swiper-slide.orange-slide
-                        img(src="#{host}/img/3.png", alt="")
-                div.swiper-pagination
-        div.go-back
-            a(href="javascript:history.back(-1)") &lt;&nbsp;返回
-            span 当前分类：#{typeText.name}
-            //- div.search
-            //-     div.search-cont
-            //-         input(id="video-type", type="hidden", value="#{type}")
-            //-         input(type="text", id="search-value", placeholder="只在当前分类-进行检索", onkeyup="getSearchKeyup()")
-            //-         button(onclick="getSearch()") 搜&nbsp;&nbsp;索
-        div.bodyer
-            div.data-detail
-                -if(result)
-                    input(id="video-url", type="hidden", value="#{result.video}")
-                    div#video
+            div.head-cont
+                div.head-logo.lf.return-index
+                    h1 #{pageKeyword+'在线播放'}
+                    a(href="/", title="回到首页")
+                        strong &lt;&nbsp;返回首页
+                -if(!userInfo)
+                    div.head-user.rf
+                        span(onclick="showMOdel('login')") 登入
+                        span(onclick="showMOdel('register')") 注册
                 -else
-                    a(href="#{host}", class="no-more" title="返回首页") 没有查询到数据，返回首页？
-            h3.randow 随机推荐
-            div.data-list
-                -if(recommond.length)
-                        each item in recommond
-                            a(href="#{host+'/detail/'+type+'/'+item.createTime}.html", title="#{item.title}在线观看")
-                                div.list-img
-                                    img(src="#{item.img.split(',')[0]}", alt="#{item.title}")
-                                div.list-title
-                                    span #{item.title}
-                -else
-                    a(class="no-more") 没有查询到数据
+                    div#logined.head-user.rf
+                        //- span.refresh(onclick='getRefresh()')
+                        //-     | &nbsp;
+                        //-     img(src="#{host+'/img/refresh.png'}", alt="刷新登入")
+                        span
+                            a(href="#{host+'/user/info'}") 个人中心       
+                        span(onclick="outLogin()")  退出
+        div.search
+            div.search-cont
+                input(type="text", id="search-value", placeholder="搜索-有你想要   如：萝莉", onkeyup="getSearchKeyup()")
+                button(onclick="search()") 搜&nbsp;&nbsp;索
+            //- div.notice
+            //-     div#notice-cont
+            //-         each item in marqueeList
+            //-             p=item
+        div.bodyer.detail
+            h2=pageTitle
+            -if(videoData.video)
+                //- iframe(id="my-iframe" data-src='<!doctype html><head><meta charset="utf-8"></head><body><style>*{box-sizing: border-box;margin:0;padding:0;}video{background:#000;width:100%;padding:30px;}@media(max-width:500px){video{padding: 2px;}}</style><video width="510" height="350" controls="controls" src="#{videoData.video}">您的浏览器不支持HTML5的 video 标签，无法为您播放！</video></body></html>', src='javascript:document.write(window.frameElement.getAttribute("data-src"))')
+                each item in videoData.video
+                    video(width="510", height="350", controls="controls", src="#{item}") 您的浏览器不支持HTML5的 video 标签，无法为您播放！
+                p 缓冲需要时间，请耐心等待!
+                    font(color="red") 部分视频不可试看
+            -else
+                a(href="#{host}", class="no-more" title="返回首页") 没有查询到数据，返回首页？
+        div.recommend.detail
+            h3 随机推荐 &gt;
+            div.list
+                each item in recommend
+                    a(href="#{host+'/detail/'+item.createTime}", title="#{item.title}在线观看")
+                        div
+                            img(src="#{item.img}", alt="#{item.title}", onerror="this.src='./img/timg.gif'")
+                        div.list-title
+                            strong #{item.title.replace(/[在线]|【在线】/, '')}
         div.footer
-            | 警告︰69公社-69gs.tv-69公社在线视频-69gs Porn videos（www.69gs.tv）只适合18岁或以上人士观看!
-            br
-            |WARNING: This Site Contains Adult Contents, No Entry For Less Than 18-Years-Old !
-        div.mulu
-            div
-                img(src="#{host+'/img/home.png'}", alt="")
-                a(href="/") 首页
-            div
-                img(src="#{host+'/img/fen_c.png'}", class="fen", alt="")
-                a(href="/menu/all.html",class="active") 分类
-            div
-                img(src="#{host+'/img/mine.png'}", class="mine", alt="")
-                a(href="/mine/mine.html") 我的
-        script(src="#{host}/js/ckplayer/ckplayer.js")
-        script(src="#{host}/js/swiper.min.js")
-        script(src="#{host}/js/detail.js", type="text/javascript")
+            | 欢迎来到&nbsp;
+            a(href="http://8llh.com", title="http://8llh.com")
+                strong WWW.8LLH.COM&nbsp;
+            | 未满18岁禁止进入
+        div#mask.mask
+        div(class="test-look", id="#{testLook.id}")
+            div(class="test-body") #{testLook.cont}
+            div(class="test-foot")
+                -if(testLook.goVip)
+                    button(class="test-sure") 
+                        a(href="#{host+'/user/info'}") 成为会员
+                -else
+                    button(onclick="showMOdel('login')", class="test-sure") 去登入   
+                button(onclick="continueTest()") 继续试看
+        script(src="#{host}/js/common.js", type="text/javascript")
+        div(style="display:none")

@@ -1,0 +1,23 @@
+doctype html 5
+html
+    head
+        meta(charset="utf-8")
+        meta(name="viewport", content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover")
+        meta(name="aplus-terminal", content="1")
+        meta(name="data-spm", content="a2141")
+        meta(name="aplus-mmstat-timeout", content="10000")
+        meta(name="keywords", content=pageKeyword)
+        meta(name="description", content='#{pageDescrition}')
+        meta(name="theme-color", content="#ff5000")
+        meta(name="format-detection", content="telephone=no")
+        meta(name="apple-mobile-web-app-title", content="#{pageDescrition}")
+        meta(name="application-name", content="#{pageDescrition}")
+        meta(name="apple-mobile-web-app-status-bar-style", content="black")
+        title=pageTitle
+    body
+        div(style="text-align:center;line-height:60px;")
+            a#go-index(href="#{host}") 没有找到页面，返回首页
+        script.
+            setTimeout(function () {
+                window.location.href = document.getElementById('go-index').getAttribute('href');
+            }, 3000)

@@ -1,0 +1,149 @@
+doctype html 5
+html
+    head
+        meta(charset="utf-8")
+        meta(name="viewport", content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover")
+        meta(name="aplus-terminal", content="1")
+        meta(name="data-spm", content="a2141")
+        meta(name="aplus-mmstat-timeout", content="10000")
+        meta(name="keywords", content=pageKeyword)
+        meta(name="description", content='#{pageDescrition}')
+        meta(name="theme-color", content="#ff5000")
+        meta(name="format-detection", content="telephone=no")
+        meta(name="apple-mobile-web-app-title", content="#{pageDescrition}")
+        meta(name="application-name", content="#{pageDescrition}")
+        meta(name="apple-mobile-web-app-status-bar-style", content="black")
+        title=pageTitle
+        link(rel="stylesheet", type="text/css", href="#{host}/css/style.css")
+        link(rel="stylesheet", type="text/css", href="#{host}/js/scroll/dropload.css")
+        link(rel="stylesheet", type="text/css", href="#{host}/css/swiper.min.css")
+    body
+        div.header-top
+            h1 #{pageTitle+','+pageKeyword}
+            //- div.cont
+            //-     marquee(scrolldelay="30")
+            //-         span 为防止域名更换, 请记住我们的导航域名 xjb520.com&nbsp;&nbsp;&nbsp;
+        div.header
+                div.cont
+                    each item in menu
+                        -if(item.url.indexOf(type) > -1)
+                            a(href="#{item.url}", class="active", title="#{item.name}") #{item.name}
+                        -else
+                            a(href="#{item.url}", title="#{item.name}") #{item.name}
+                    //- a(title="登录") 登录
+                    //- a(title="注册") 注册
+                div.shadow
+        div.banner
+            div.swiper-container
+                div.swiper-wrapper
+                    div.swiper-slide.blue-slide 
+                        img(src="#{host}/img/1.png", alt="")
+                    div.swiper-slide.red-slide
+                        img(src="#{host}/img/2.png", alt="")
+                    div.swiper-slide.orange-slide
+                        img(src="#{host}/img/3.png", alt="")
+                div.swiper-pagination
+        div.search
+            div.search-cont
+                input(type="text", id="search-value", placeholder="只在当前分类-进行检索", onkeyup="getSearchKeyup()")
+                button(onclick="getSearch()") 搜&nbsp;索
+        div.bodyer.list-page
+            div.data-list
+                //- -if(result.length)
+                //-     each item in result
+                //-         a(href="#{host+'/detail/'+type+'/'+item.id}.html", title="#{item.title}在线观看", target="_blank")
+                //-             div.list-img
+                //-                 img(src="#{item.img}", alt="#{item.title}")
+                //-             div.list-title
+                //-                 span #{item.title}
+                //- -else
+                //-     a(href="#{host}", class="no-more" title="返回首页") 没有查询到数据，返回首页？
+        //- div.page !{page}
+        div.mulu
+            div
+                img(src="#{host+'/img/home.png'}", alt="")
+                a(href="/") 首页
+            div
+                img(src="#{host+'/img/fen_c.png'}", class="fen", alt="")
+                a(href="/menu/all.html",class="active") 分类
+            div
+                img(src="#{host+'/img/mine.png'}", class="mine", alt="")
+                a(href="/mine/mine.html") 我的
+        div.footer
+            | 警告︰69公社-69gs.tv-69公社在线视频-69gs Porn videos（www.69gs.tv）只适合18岁或以上人士观看!
+            br
+            |WARNING: This Site Contains Adult Contents, No Entry For Less Than 18-Years-Old !
+        script(src="#{host}/js/scroll/zepto.min.js", type="text/javascript")
+        script(src="#{host}/js/scroll/dropload.min.js", type="text/javascript")
+        script(src="#{host}/js/swiper.min.js")
+        script(type="text/javascript").
+            var urlSearch = window.location.href.split('search=');
+            if (urlSearch.length > 1) {
+                document.getElementById('search-value').value = decodeURI(urlSearch[1]);
+            }
+            function getSearch () {
+                var val = document.getElementById('search-value').value;
+                var wLocaltion = window.location;
+                var pathname = wLocaltion.pathname;
+                var host = wLocaltion.host;
+                window.location.href = pathname+'?search='+val;
+            }
+            function getSearchKeyup (e) {
+                var event = e || window.event;
+                if (event.keyCode == "13") {
+                    getSearch();
+                }
+            }
+            var banner = document.querySelector('.banner');
+            var img = document.querySelector('.swiper-wrapper .swiper-slide img');
+            banner.style.height = img.height;
+            var mySwiper = new Swiper('.swiper-container',{
+                loop: true,
+                autoplay: 5000,
+                pagination : '.swiper-pagination'
+            });
+            $(function(){
+                var counter = 0;
+                // dropload
+                var dropload = $('.bodyer').dropload({
+                    scrollArea : window,
+                    loadDownFn : function(me){
+                        $.ajax({
+                            type: 'post',
+                            url: '/getList',
+                            dataType: 'json',
+                            data: {page: counter, url: document.location.href},
+                            success: function(data){
+                                var result = '';
+                                var lists = data.list;
+                                counter++;
+                                for(var i = 0; i < lists.length; i++){
+                                    result +=   '<a class="item opacity" href="/detail/'+data.type+'/'+lists[i].createTime+'.html">'
+                                                    +'<div class="list-img"><img src="'+lists[i].img.split(',')[0]+'" alt=""></div>'
+                                                    +'<div class="list-title"><span>'+lists[i].title+'</span></div>'
+                                                +'</a>';
+                                }
+                                if(lists.length < 10){
+                                    // 数据加载完
+                                    tab1LoadEnd = true;
+                                    // 锁定
+                                    me.lock();
+                                    // 无数据
+                                    me.noData();
+                                }
+                                // 为了测试，延迟1秒加载
+                                setTimeout(function(){
+                                    $('.data-list').append(result);
+                                    // 每次数据加载完，必须重置
+                                    me.resetload();
+                                },1000);
+                            },
+                            error: function(xhr, type){
+                                alert('Ajax error!');
+                                // 即使加载出错，也得重置
+                                me.resetload();
+                            }
+                        });
+                    }
+                });
+            });
