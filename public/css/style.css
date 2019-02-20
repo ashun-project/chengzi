@@ -559,6 +559,44 @@ iframe{
     /* border-radius: 3px; */
     font-weight: 600;
 }
+.mine .spread{
+    max-width: 960px;
+    margin: 10px auto;
+    width: 100%;
+    padding: 0 10px;
+}
+.mine .spread div{
+    padding: 5px 0;
+}
+.mine .spread a{
+    display: inline-block;
+    line-height: 34px;
+    text-align: center;
+    color: #333;
+    font-size: 12px;
+}
+.mine .spread button, .mine .spread a{
+    width: 20%;
+    height: 35px;
+    border: 2px solid #800;
+    background: #fff;
+    margin-right: 2%;
+    outline: none;
+    cursor: pointer;
+}
+.mine .spread button:active{
+    background: #800;
+    color: #fff;
+}
+.mine .spread input{
+    width: 78%;
+    height: 35px;
+    border: 0;
+    background: #fff;
+    padding-left: 10px;
+    outline: none;
+}
+
 .mine .tab-menu a.shuoming{
     margin-right: 1%;
 }

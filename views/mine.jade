@@ -50,13 +50,19 @@ html
                 button.duihuan(onclick="exchange()") 积分兑换
 
         div.tab
-            div.tab-menu
-                a.chongzhi(href="#chongzhi") 我要推广
-            div.tab-list
-                div.tip-money#lianjie
-                    p(style="line-height:20px;font-size: 14px;width:100%;margin-bottom:6px;") 复制下面地址发送给好友
-                    textarea(id="copy-cont",name="") #{host}?recommend=#{userName}
-                    button(onclick="goCopy()") 复制
+            //- div.tab-menu
+            //-     a.chongzhi(href="#chongzhi") 我要推广
+            //- div.tab-list
+            //-     div.tip-money#lianjie
+            //-         p(style="line-height:20px;font-size: 14px;width:100%;margin-bottom:6px;") 复制下面地址发送给好友
+            //-         textarea(id="copy-cont",name="") #{host}?recommend=#{userName}
+            //-         button(onclick="goCopy()") 复制
+            div.spread
+                div
+                    button(onclick="exKami()") 激活码兑换
+                    input(type="text", placeholder="请输入激活码")
+                div
+                    a(href="#{host}/user/share?recommend=#{userName}") 我要推广
             div.tab-menu
                 a.shuoming(href="#shuoming") 本站说明
                 //- a.chongzhi(href="#chongzhi") 马上充值

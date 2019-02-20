@@ -69,6 +69,8 @@ router.get('/:page?/:title?', function (req,res) {
             getMine(req,res);
         } else if (req.params.page === 'user' && req.params.title === 'member') {
             // getMember(req,res);
+        } else if (req.params.page === 'user' && req.params.title === 'share') {
+            getShaer(req,res);
         } else {
             getIndex(req,res);
         }
@@ -259,6 +261,11 @@ function getMine (req, res) {
         host: 'http://'+req.headers['host']
     }
     res.render('mine', listObj);
+}
+
+function getShaer(req, res){
+    var user = req.session.loginUser||{};
+    res.render('share');
 }
 
 router.post('/register', function (req, res) {

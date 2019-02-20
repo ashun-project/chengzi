@@ -1,0 +1,196 @@
+doctype html 5
+html
+    head
+        meta(charset="utf-8")
+        meta(name="viewport", content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover")
+        meta(name="aplus-terminal", content="1")
+        meta(name="data-spm", content="a2141")
+        meta(name="aplus-mmstat-timeout", content="10000")
+        meta(name="theme-color", content="#ff5000")
+        meta(name="format-detection", content="telephone=no")
+        meta(name="apple-mobile-web-app-status-bar-style", content="black")
+        title 分享链接
+        style.
+            *{
+                padding: 0;
+                margin: 0;
+                box-sizing: border-box;
+            }
+            html{
+                background: #f2f2f2;
+            }
+            body{
+                max-width: 960px;
+                width: 100%;
+                margin: auto;
+                background: url('/img/meinv.jpg') no-repeat top center;
+                background-size: auto 100%;
+                background-color: #fff;
+                padding-bottom: 132px;
+            }
+            .tuiguang{
+                width: 100%;
+            }
+            .tuiguang .tui-top{
+                text-align: center;
+                position: relative;
+                line-height: 35px;
+                padding: 10px 0;
+                border-bottom: 1px solid #f2f2f2;
+            }
+            .tuiguang .tui-top a{
+                position: absolute;
+                top: 13px;
+                left: 10px;
+                display: block;
+                font-size: 16px;
+                text-decoration: none;
+                border: 1px solid #eee;
+                height: 30px;
+                width: 30px;
+                border-radius: 50%;
+                text-align: center;
+                line-height: 26px;
+                background: #c600e3;
+                color: #fff;
+            }
+            .tuiguang .tui-top a:hover{
+                background: #54195d;
+            }
+            .er{
+                margin: 100px auto 0;
+                width: 250px;
+                height: 270px;
+                position: relative;
+                background: #fff;
+            }
+            #output{
+                position: relative;
+                width: 220px;
+                padding: 10px;
+                margin: 0 auto;
+            }
+            .er .bian{
+                position: absolute;
+                top:0;
+                left: 0;
+                width: 100%;
+            }
+            .er .logo{
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 50px;
+                height: 50px;
+                padding: 5px;
+                background: #fff;
+                border: 1px solid #f2f2f2;
+            }
+            .er > p{
+                text-align: center;
+                line-height: 30px;
+                padding-top: 10px;
+                margin-bottom: 3px;
+            }
+            .tui{
+                width: 200px;
+                height: 43px;
+                margin: 20px auto;
+                text-align: center;
+                line-height: 43px;
+                background: url('/img/tui.png') no-repeat top center;
+                background-size: 100%;
+                background-color: #fff;
+                border-radius: 5px;
+                position: relative;
+                z-index: 99999;
+            }
+            .tui:active{
+                background: #c600e3;
+                color:#fff;
+                cursor: pointer;
+            }
+            .dibu{
+                position: fixed;
+                bottom: 0;
+                left: 50%;
+                max-width: 600px;
+                width: 100%;
+                height: 132px;
+                transform: translateX(-50%);
+                background: url('/img/d.png') no-repeat bottom center;
+                background-size: 100%;
+                text-align: center;
+                line-height: 180px;
+            }
+            @media (max-width:600px) {
+                body{
+                    padding-bottom: 110px;
+                }
+                .dibu{
+                    height: 110px;
+                    line-height: 140px;
+                }
+            }
+            @media (max-width:500px) {
+                body{
+                    padding-bottom: 90px;
+                }
+                .dibu{
+                    height: 90px;
+                    font-size: 12px;
+                    line-height: 120px;
+                }
+            }
+            #url-value{
+                position:fixed;
+                z-index: -1;
+                width:0;
+                height: 0;
+                overflow: hidden;
+            }
+            @media (max-width:400px) {
+                body{
+                    padding-bottom: 70px;
+                }
+                .dibu{
+                    height: 70px;
+                    font-size: 12px;
+                    line-height: 90px;
+                }
+            }
+    body
+        div.tuiguang
+            div.tui-top
+                a(href="javascript:history.back();") &lt;
+                span 分享二维码获取免费观影
+            div.er
+                img(src="/img/er.png", class="bian" alt="")
+                p 保存二维码分享给好友
+                div#output
+                    img(src="/img/tt.png", class="logo" alt="")
+            div.tui(onclick="goCopy()") 
+                | 复制推广链接
+            div.dibu
+                | 温馨提示：可手机截图保存二维码
+            textarea(name="", id="url-value" cols="30", rows="5")
+        script(src="/js/jquery-1.10.2.min.js")
+        script(type="text/javascript", src="/js/jquery.qrcode.min.js")
+        script.
+            jQuery(function(){
+                var host = window.location.host;
+                var searchResult = window.location.search;
+                $('#url-value').html(host+ '/' +searchResult);
+                jQuery('#output').qrcode({
+                    width: 200,   //默认宽度
+                    height: 200, //默认高度 
+                    text: host+ '/' +searchResult
+                });
+            })
+            function goCopy() {
+                var Url2=document.getElementById("url-value");
+                Url2.select(); // 选择对象
+                document.execCommand("Copy"); // 执行浏览器复制命令
+                alert('复制成功，去发送给好友吧');
+            }
