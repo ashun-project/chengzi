@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
+var encryption = require('./md5');
 var poolUser = mysql.createPool({
     host: 'localhost',
     user: 'root',
@@ -71,6 +72,8 @@ router.get('/:page?/:title?', function (req,res) {
             // getMember(req,res);
         } else if (req.params.page === 'user' && req.params.title === 'share') {
             getShaer(req,res);
+        }  else if (req.params.page === 'user' && req.params.title === 'kami'){
+            getKami(req,res);
         } else {
             getIndex(req,res);
         }
@@ -263,10 +266,118 @@ function getMine (req, res) {
     res.render('mine', listObj);
 }
 
+function getKami (req, res) {
+    var user = req.session.loginUser;
+    var userList = ['ashunadmin', 'ahaoadmin'];
+    var sql = 'SELECT * FROM kami';
+    var listObj = {
+        listData: [],
+        pageTitle: '卡密',
+        pageKeyword: '卡密',
+        pageDescrition: '网红萝莉有你，萝莉吧给你想要哦',
+        user: user,
+        host: 'http://'+req.headers['host']
+    }
+    if(user && userList.indexOf(user.userName) > -1) {
+        poolUser.getConnection(function (err, conn) {
+            if (err) console.log("POOL userlist-register==> " + err);
+            conn.query(sql, function (err, result) {
+                listObj.listData = result;
+                res.render('kami', listObj);
+                conn.release();
+            });
+        });
+    } else {
+        res.render('kami', listObj);
+    }
+} 
+
 function getShaer(req, res){
     var user = req.session.loginUser||{};
     res.render('share');
 }
+
+// 卡密更新用户
+router.post('/kamiUpdateUser', function (req, res, next) {
+    var kami = req.body.kami;
+    var login = req.session.loginUser;
+    var sql = 'SELECT * FROM kami where kami = "' + kami + '"';
+    if (kami.length < 5) {
+        res.json({error: '无效卡密'});
+        return;
+    }
+    if (login) {
+        poolUser.getConnection(function (err, conn) {
+            if (err) console.log("POOL userlist-register==> " + err);
+            conn.query(sql, function (err, result) {
+                if(result[0]) {
+                    var time = (Number(result[0].day)+1) * 24 * 60 * 60 * 1000;
+                    var startTiem = new Date().getTime() + time;
+                    var date = '';
+                    console.log(login.date);
+                    if (login.date) {
+                        if (new Date(login.date).getTime() > new Date().getTime()) {
+                            startTiem = new Date(login.date).getTime() + time;
+                        }
+                    }
+                    date = getFormatDate(startTiem);
+                    var upSql = 'update list set endDate = "'+ date +'" where userName = "'+ login.userName + '"';
+                    var delSql = 'delete from kami where kami = "' + kami + '"';
+                    var infoSql = 'INSERT INTO usedkami(kami,ip,user,agent) VALUES (?,?,?,?)';
+                    conn.query(upSql, function (err, result1) {
+                        req.session.loginUser.endDate = date;
+                        conn.query(delSql, function (err, result2) {});
+                        conn.query(infoSql, [result[0].kami, getClientIP(req), login.userName, result[0].agent], function (err, result2) {});
+                        res.json({success: '更新成功'});
+                        conn.release(); 
+                    });
+                } else {
+                    res.json({error: '无效卡密'});
+                    conn.release();
+                }
+            });
+        });
+    } else {
+        res.json({error: '请重新登入'});
+    }
+});
+router.post('/addKami', function (req, res) {
+    var login = req.session.loginUser;
+    var addNum = Number(req.body.addNum) || 1;
+    var day = req.body.day;
+    var agent = req.body.agent;
+    var createTime = new Date().getTime();
+    var userList = ['ashunadmin', 'ahaoadmin'];
+    if(login && userList.indexOf(login.userName) > -1) {
+        var arr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+        // 随机产生
+        var info = [];
+        for (var j = 0; j < addNum; j++) {
+            var range = Math.round(Math.random() * 5) + 32;
+            var str = '';
+            for(var i=0; i<range; i++){
+                pos = Math.round(Math.random() * (arr.length-1));
+                str += arr[pos];
+            }
+            info.push([encryption.md5(createTime+j+'ahaoadmin'+str)+arr[range], day, agent, createTime]);
+        }
+        var sqlInfo = "INSERT INTO kami(kami,day,agent,createTime) VALUES ?";
+        poolUser.getConnection(function (err, conn) {
+            if (err) console.log("POOL register==> " + err);
+            conn.query(sqlInfo, [info], function (err, result) {
+                if (err) {
+                    console.log('sqlInfo - ', err.message);
+                    res.json({error: '系统出错请重新操作'});
+                } else {
+                    res.json({list: info});
+                }
+                conn.release();
+            });
+        });
+    } else {
+        res.json({error: '身份错误'});
+    }
+});
 
 router.post('/register', function (req, res) {
     var recommend =  req.body.recommend;

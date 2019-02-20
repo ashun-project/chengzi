@@ -59,8 +59,8 @@ html
             //-         button(onclick="goCopy()") 复制
             div.spread
                 div
-                    button(onclick="exKami()") 激活码兑换
-                    input(type="text", placeholder="请输入激活码")
+                    button(onclick="goExchange()") 激活码兑换
+                    input(type="text", id="kami-value" placeholder="请输入激活码")
                 div
                     a(href="#{host}/user/share?recommend=#{userName}") 我要推广
             div.tab-menu

@@ -1,0 +1,76 @@
+doctype html 5
+html
+    head
+        meta(charset="utf-8")
+        meta(name="viewport", content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover")
+        meta(name="aplus-terminal", content="1")
+        meta(name="data-spm", content="a2141")
+        meta(name="aplus-mmstat-timeout", content="10000")
+        meta(name="keywords", content=pageKeyword)
+        meta(name="description", content='#{pageDescrition}')
+        meta(name="theme-color", content="#ff5000")
+        meta(name="format-detection", content="telephone=no")
+        meta(name="apple-mobile-web-app-title", content="#{pageDescrition}")
+        meta(name="application-name", content="#{pageDescrition}")
+        meta(name="apple-mobile-web-app-status-bar-style", content="black")
+        title=pageTitle
+        link(rel="stylesheet", type="text/css", href="#{host}/css/style.css")
+    body
+        div.header
+            div.head-cont
+                div.head-logo.lf
+                    h1 #{pageKeyword}
+                    a(href="/", title="萝莉网红永久访问地址",style="font-size:18px;font-weight:bolder;letter-spacing:5px;color:#bdabab;")
+                        | 超越明天
+                div#logined.head-user.rf
+                    -if(!user)
+                        div.head-user.rf
+                            span(onclick="showMOdel('login')") 登入
+                            span(onclick="showMOdel('register')") 注册
+                    -else
+                        div#logined.head-user.rf   
+                            span(onclick="outLogin()")  退出 
+        div.kami-tab
+            span#shangzhu-kami.active(onclick="changeAgent(1)") 商主
+            span#agent-kami(onclick="changeAgent(2)") 代理
+        div.add-kami
+            div.search-cont
+                span 生成数量:
+                input(type="text", id="kami-num", value="1")
+                select(name="", id="kami-day")
+                    //- option(value="1") 一天
+                    //- option(value="7") 7天
+                    option(value="30") 一个月
+                    option(value="90") 一季
+                    option(value="360") 1年
+                button.rf(onclick="addKami()") 生成卡密
+            div.result-cont
+                textarea(name="", id="textarea-value" rows="6")
+                button.rf(onclick="goCopy()") 复制
+        div.bodyer.kami-table
+            div.tab
+                span.active(data="0", id="kami-day-0", onclick="changeDay(0)") 全部
+                //- span(data="1", id="kami-day-1", onclick="changeDay(1)") 一天
+                //- span(data="7", id="kami-day-7", onclick="changeDay(7)") 7天
+                span(data="30", id="kami-day-30", onclick="changeDay(30)") 一个月
+                span(data="90", id="kami-day-90", onclick="changeDay(90)") 一季
+                span(data="360", id="kami-day-360", onclick="changeDay(360)") 1年
+            table(id="my-table")
+                thead
+                    tr
+                        th 卡密
+                        th 天数
+                tbody#agent-table-1
+                    each item in listData
+                        -if (item.agent === '1')
+                            tr(class="tr-#{item.day}")
+                                td #{item.kami}
+                                td #{item.day}
+                tbody#agent-table-2
+                    each item in listData
+                        -if (item.agent === '2')
+                            tr(class="tr-#{item.day}")
+                                td #{item.kami}
+                                td #{item.day}
+        div#mask.mask
+        script(src="#{host}/js/kami.js", type="text/javascript")

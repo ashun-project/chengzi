@@ -414,6 +414,38 @@ function goDownload() {
     }
 }
 
+var goExchangeing = '1';
+function goExchange() {
+    var value = document.getElementById('kami-value').value;
+    if (value) {
+        if (goExchangeing == '2') {
+            return;
+        }
+        goExchangeing = '2';
+        ajax({  
+            type: "post",
+            url: '/kamiUpdateUser',
+            data: {kami: value},
+            success: function (data) {
+                var cont = JSON.parse(data);
+                if (cont.error) {
+                    alert(cont.error)
+                    goExchangeing = '1';
+                } else {
+                    alert('兑换成功');
+                    location.reload();
+                }
+            },
+            error: function () {
+                alert('系统异常，操作失败');
+                goExchangeing = '1';
+            }
+        });
+    } else {
+        alert('请输入卡密');
+    }
+}
+
 function goCopy() {
     var Url2=document.getElementById("copy-cont");
     Url2.select(); // 选择对象

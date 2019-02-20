@@ -713,6 +713,97 @@ iframe{
     margin-right: 8px;
     margin-left: 15px;
 }
+.kami-tab{
+    max-width: 960px;
+    width: 100%;
+    line-height: 40px;
+    background: #becad4;
+    color: #fff;
+    margin: 10px auto 0;
+}
+.kami-tab span{
+    display: inline-block;
+    width: 50%;
+    text-align: center;
+    cursor: pointer;
+}
+.kami-tab span.active{
+    background: #2f3335;
+}
+.add-kami{
+    background: #f2f2f2;
+    padding: 10px;
+}
+.add-kami .search-cont, .add-kami .result-cont{
+    max-width: 960px;
+    width: 100%;
+    margin: 0 auto;
+}
+.add-kami .result-cont{
+    padding: 10px 0;
+}
+.add-kami .search-cont input, .add-kami .search-cont select{
+    padding: 0 5px;
+    border: 1px solid #e5e6e7;
+    box-shadow: 0 0 10px rgba(51, 51, 51, 0.09);
+    width: 26%;
+    height: 40px;
+    margin-right: 5px;
+    border-radius: 6px;
+}
+.add-kami .search-cont input:focus{
+    outline:none;
+    border: 1px solid rgba(47, 250, 108, 0.09);
+    box-shadow: 0 0 10px rgba(47, 250, 108, 0.18);
+}    
+.add-kami .search-cont button{
+    padding: 0 5px;
+    border: 1px solid #e5e6e7;
+    background: #dbddde;
+    box-shadow: 0 0 10px rgba(51, 51, 51, 0.09);
+    outline: none;
+    width: 26%;
+    height: 40px;
+    cursor: pointer;
+    font-size: 14px;
+}
+.add-kami .search-cont button:active{
+    background: #ccc;
+    color: #fff;
+}
+.add-kami .result-cont textarea{
+    width: 80%;
+    border: 1px solid #eee;
+}
+.add-kami .result-cont button{
+    width: 18%;
+    border: 1px solid #eee;
+    height: 35px;
+    background: #dbddde;
+    outline: none;
+    margin-top: 55px;
+    cursor: pointer;
+}
+.add-kami .result-cont button:active{
+    background: #ccc;
+    color: #fff;
+}
+#agent-table-2{
+    display: none;
+}
+.kami-table span{
+    display: inline-block;
+    border-right: 1px solid #eee;
+    line-height: 30px;
+    width: 25%;
+    text-align: center;
+    background: #CCC;
+    cursor: pointer;
+}
+.kami-table span.active{
+    background: #b16e6e;
+    color: #fff;
+}
 @media (max-width:600px) {
     .header{
         height: 45px;
