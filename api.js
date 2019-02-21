@@ -5,13 +5,14 @@ var encryption = require('./md5');
 var poolUser = mysql.createPool({
     host: 'localhost',
     user: 'root',
-    password: 'ashun666',
+    password: 'ashun',
     database: 'waibao'//user //waibao
 });
 var poolVip = mysql.createPool({
-    host: 'localhost',
+    host: '103.104.104.81',
     user: 'root',
     password: 'ashun666',
+    port: '3306',
     database: 'vip'
 });
 var marqueeList = ['小提醒:充值后若无法观看联系客服2982501851', '小福利:累计充值满300元永久免费哦', '小公告:为防止被墙我们的永久域名是www.8llh.com', '小提示:找不到喜欢的吗？搜索有你想要哦', '小条件:只有充值后才能观看完整版哦'];
