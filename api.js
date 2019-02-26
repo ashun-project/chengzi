@@ -5,14 +5,13 @@ var encryption = require('./md5');
 var poolUser = mysql.createPool({
     host: 'localhost',
     user: 'root',
-    password: 'ashun',
+    password: 'ashun666',
     database: 'waibao'//user //waibao
 });
 var poolVip = mysql.createPool({
-    host: '103.104.104.81',
+    host: 'localhost',
     user: 'root',
     password: 'ashun666',
-    port: '3306',
     database: 'vip'
 });
 var marqueeList = ['小提醒:充值后若无法观看联系客服2982501851', '小福利:累计充值满300元永久免费哦', '小公告:为防止被墙我们的永久域名是www.8llh.com', '小提示:找不到喜欢的吗？搜索有你想要哦', '小条件:只有充值后才能观看完整版哦'];
@@ -58,7 +57,16 @@ function vaidParams(userName, password) {
     }
     return error;
 }
-
+router.all("*", function (req, res, next) {
+    var deviceAgent = req.headers["user-agent"].toLowerCase();
+    var agentID = deviceAgent.match(/(iphone|ipod|ipad|android)/);
+    if (agentID) {
+        req.zd = "mobile";
+    } else {
+        req.zd = "pc";
+    }
+    next();
+})
 // router.get('/', getIndex);
 // router.get('/:page', getIndex);
 router.get('/:page?/:title?', function (req,res) {
@@ -116,7 +124,8 @@ function getIndex(req,res) {
                                 currentPage: currentReq,
                                 titlePage: titleReq,
                                 userInfo: req.session.loginUser,
-                                host: 'http://'+req.headers['host']
+                                host: 'http://'+req.headers['host'],
+                                zd: req.zd
                             }
                             res.render('index', listObj);
                             conn.release();
@@ -204,7 +213,7 @@ function getDetail (req,res) {
                             resultO = JSON.parse(JSON.stringify(result[0]));
                         }
                         var vio = resultO.video ? resultO.video.split(',') : [];
-                        var addStr = '?end=120';
+                        var addStr = '';//?end=120
                         if (user) {
                             testLook = {id: 'test-look', cont: '你目前还不是VIP会员，只能试看两分钟。', goVip: true};
                             if (user.endDate) {

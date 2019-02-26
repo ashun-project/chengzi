@@ -48,7 +48,7 @@ html
             -if(videoData.video)
                 //- iframe(id="my-iframe" data-src='<!doctype html><head><meta charset="utf-8"></head><body><style>*{box-sizing: border-box;margin:0;padding:0;}video{background:#000;width:100%;padding:30px;}@media(max-width:500px){video{padding: 2px;}}</style><video width="510" height="350" controls="controls" src="#{videoData.video}">您的浏览器不支持HTML5的 video 标签，无法为您播放！</video></body></html>', src='javascript:document.write(window.frameElement.getAttribute("data-src"))')
                 each item in videoData.video
-                    video(width="510", height="350", controls="controls", src="#{item}") 您的浏览器不支持HTML5的 video 标签，无法为您播放！
+                    video(width="510", height="350", controls="controls", src="#{item.replace('https://av51av.com', '/videoapi')}") 您的浏览器不支持HTML5的 video 标签，无法为您播放！
                 p 缓冲需要时间，请耐心等待!
                     font(color="red") 部分视频不可试看
             -else
@@ -59,7 +59,7 @@ html
                 each item in recommend
                     a(href="#{host+'/detail/'+item.createTime}", title="#{item.title}在线观看")
                         div
-                            img(src="#{item.img}", alt="#{item.title}", onerror="this.src='./img/timg.gif'")
+                            img(src="#{item.img.replace(/http\:\/\/mvxxoo\.com|\/\/mvxxoo\.com/, '/imgapi')}", alt="#{item.title}", onerror="this.src='./img/timg.gif'")
                         div.list-title
                             strong #{item.title.replace(/[在线]|【在线】/, '')}
         div.footer

@@ -16,6 +16,7 @@ html
         meta(name="referrer", content="never")
         title=pageTitle
         link(rel="stylesheet", type="text/css", href="#{host}/css/style.css")
+        link(rel="stylesheet", type="text/css", href="#{host}/css/swiper.min.css")
     body
         div.header
             div.head-cont
@@ -40,6 +41,16 @@ html
                         span
                             a(href="#{host+'/user/info'}", target="_blank") 个人中心       
                         span(onclick="outLogin()")  退出
+        div.banner
+            div.swiper-container
+                div.swiper-wrapper
+                    div.swiper-slide.blue-slide 
+                        img(src="#{host}/img/#{zd == 'pc'?'pc1': '1'}.png", alt="")
+                    div.swiper-slide.red-slide
+                        img(src="#{host}/img/#{zd == 'pc'?'pc2': '2'}.png", alt="")
+                    div.swiper-slide.orange-slide
+                        img(src="#{host}/img/#{zd == 'pc'?'pc3': '3'}.png", alt="")
+                div.swiper-pagination
         div.search
             div.search-cont
                 input(type="text", id="search-value", placeholder="搜索-有你想要   如：萝莉", onkeyup="getSearchKeyup()")
@@ -54,7 +65,7 @@ html
                     each item in listData
                         a(href="#{host+'/detail/'+item.createTime}", title="#{item.title}在线观看", target="_blank")
                             div
-                                img(src="#{item.img}", alt="#{item.title}")
+                                img(src="#{item.img.replace(/http\:\/\/mvxxoo\.com|\/\/mvxxoo\.com/, '/imgapi')}", alt="#{item.title}")
                             div.list-title
                                 strong #{item.title.replace(/[在线]|【在线】/, '')}
                 -else
@@ -117,4 +128,13 @@ html
                 a(href="http://www.llh9.xyz", title="http://www.llh9.xyz") www.llh9.xyz
         div#mask.mask
         script(src="#{host}/js/common.js", type="text/javascript")
-        div(style="display:none")
+        script(src="#{host}/js/swiper.min.js")
+        script(type="text/javascript").
+            var banner = document.querySelector('.banner');
+            var img = document.querySelector('.swiper-wrapper .swiper-slide img');
+            banner.style.height = img.height;
+            var mySwiper = new Swiper('.swiper-container',{
+                loop: true,
+                autoplay: 5000,
+                pagination : '.swiper-pagination'
+            });
