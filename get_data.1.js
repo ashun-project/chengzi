@@ -132,7 +132,7 @@ function listArr (list) {
         var timeS = new Date(date.getFullYear() +'-' + (date.getMonth()+1) + '-' + date.getDate() + ' 23:00:00').getTime();
         setTimeout(function () {
             init();
-        }, timeS - date.getTime() + (6*60*60*1000)); // 8小时后重新调  
+        }, 24 * 60 * 60 * 1000); // 8小时后重新调  timeS - date.getTime() + (6*60*60*1000)
     } else {      
         var sql = 'select * from list where url =' + '"' + list[dtNum].url +'"';
         pool.getConnection(function (err, conn) {
