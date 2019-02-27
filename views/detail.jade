@@ -59,7 +59,7 @@ html
                 each item in recommend
                     a(href="#{host+'/detail/'+item.createTime}", title="#{item.title}在线观看")
                         div
-                            img(src="#{item.img.replace(/http\:\/\/mvxxoo\.com|\/\/mvxxoo\.com/, '/imgapi')}", alt="#{item.title}", onerror="this.src='./img/timg.gif'")
+                            img(src="#{item.img.replace(/http\:\/\/mvxxoo\.com|\/\/mvxxoo\.com/, '/imgapi')}", alt="#{item.title}")
                         div.list-title
                             strong #{item.title.replace(/[在线]|【在线】/, '')}
         div.footer
@@ -77,5 +77,5 @@ html
                 -else
                     button(onclick="showMOdel('login')", class="test-sure") 去登入   
                 button(onclick="continueTest()") 继续试看
-        script(src="#{host}/js/common.js", type="text/javascript")
+        script(src="#{host}/js/common.js", type="text/javascript")     
         div(style="display:none")

@@ -58,7 +58,8 @@ function vaidParams(userName, password) {
     return error;
 }
 router.all("*", function (req, res, next) {
-    var deviceAgent = req.headers["user-agent"].toLowerCase();
+    var userAgent = req.headers["user-agent"] || 'iphone';
+    var deviceAgent = userAgent.toLowerCase();
     var agentID = deviceAgent.match(/(iphone|ipod|ipad|android)/);
     if (agentID) {
         req.zd = "mobile";
