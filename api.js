@@ -229,7 +229,11 @@ function getDetail (req,res) {
                             testLook = {id: 'test-look', cont: '你目前还没有登入，只能试看两分钟。', goVip: ''};
                         }
                         for(var k = 0; k < vio.length; k++) {
-                            vio[k] = vio[k] + addStr;
+                            if (addStr) {
+                                vio[k] = vio[k];
+                            } else {
+                                vio[k] = vio[k].split('?')[0];
+                            }
                         }
                         resultO.video = vio;
                         var listObj = {
