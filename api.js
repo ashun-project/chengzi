@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var fs = require("fs");
 var mysql = require('mysql');
 var encryption = require('./md5');
 var poolUser = mysql.createPool({
@@ -214,7 +215,7 @@ function getDetail (req,res) {
                             resultO = JSON.parse(JSON.stringify(result[0]));
                         }
                         var vio = resultO.video ? resultO.video.split(',') : [];
-                        var addStr = '';//?end=120
+                        var addStr = '?end=120';//?end=120
                         if (user) {
                             testLook = {id: 'test-look', cont: '你目前还不是VIP会员，只能试看两分钟。', goVip: true};
                             if (user.endDate) {
@@ -229,10 +230,12 @@ function getDetail (req,res) {
                             testLook = {id: 'test-look', cont: '你目前还没有登入，只能试看两分钟。', goVip: ''};
                         }
                         for(var k = 0; k < vio.length; k++) {
+                            var slpUrl = vio[k].split('/');
+                            var slpUrl2 = 'http://www.onepussy.club/video/list/'+slpUrl[slpUrl.length-1];
                             if (addStr) {
-                                vio[k] = vio[k];
+                                vio[k] = slpUrl2;
                             } else {
-                                vio[k] = vio[k].split('?')[0];
+                                vio[k] = slpUrl2.split('?end=120')[0];
                             }
                         }
                         resultO.video = vio;
@@ -541,6 +544,47 @@ router.post('/exchange', function (req, res, next) {
         res.json({error: '更新失败'});
     }
 });
+
+router.get('/video/list/:id', function(req, res) {
+    let path = './public/videos/'+req.param.id;
+    let stat = '';
+	try{
+        stat = fs.statSync(path);
+    }catch(e){
+        res.end()
+		return;
+    }
+    let fileSize = stat.size;
+    let range = req.headers.range;
+    if (range) {
+        //有range头才使用206状态码
+
+        let parts = range.replace(/bytes=/, "").split("-");
+        let start = parseInt(parts[0], 10);
+        let end = parts[1] ? parseInt(parts[1], 10) : start + 999999;
+
+        // end 在最后取值为 fileSize - 1 
+        end = end > fileSize - 1 ? fileSize - 1 : end;
+        console.log(start, end);
+        let chunksize = (end - start) + 1;
+        let file = fs.createReadStream(path, { start, end });
+        let head = {
+            'Content-Range': `bytes ${start}-${end}/${fileSize}`,
+            'Accept-Ranges': 'bytes',
+            'Content-Length': chunksize,
+            'Content-Type': 'video/mp4',
+        };
+        res.writeHead(206, head);
+        file.pipe(res);
+    } else {
+        let head = {
+            'Content-Length': fileSize,
+            'Content-Type': 'video/mp4',
+        };
+        res.writeHead(200, head);
+        fs.createReadStream(path).pipe(res);
+    }
+})
 
 router.get('*', function (req, res, next) {
     var listObj = {

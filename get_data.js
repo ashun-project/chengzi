@@ -2,7 +2,7 @@ var request = require("request");
 var cheerio = require('cheerio');
 const iconv = require('iconv-lite');
 var mysql = require('mysql');
-var num = 2;//716
+var num = 732;//
 var dtNum = 0;
 var arr = [];
 var ip = [
@@ -75,7 +75,7 @@ function getAjax(url) {
 }
 
 function getList () {
-    var url = 'https://51xiaoluoli.space/page/'+num;
+    var url = 'https://51xiaoluoli.bid/page/'+num;
     getAjax(url).then(function (){
         var li = $('.update_area_lists .i_list');
         var time = new Date().getTime();
@@ -150,8 +150,8 @@ function listArr (newArr) {
 }
 
 function getDetail() {
-    var sql = 'select * from list order by createTime desc limit 0,30';
-    // var sql = 'select * from list';
+    // var sql = 'select * from list order by createTime desc limit 0,30';
+    var sql = 'select * from list';
     pool.getConnection(function (err, conn) {
         if (err) console.log("detail ==> " + err);
         conn.query(sql, function (err, rows, fields) {
@@ -193,7 +193,7 @@ function detailList (list) {
                         detailList(list);
                     } else {
                         getAjax(list[dtNum].url).then(function () {
-                            var video = $('#content video').attr('src');
+                            var video = $('#content video source').attr('src');
                             if (video) {
                                 var sql = "INSERT INTO defDetail(createTime,url,title, video) VALUES (?,?,?,?)";
                                 var info = [list[dtNum].createTime, list[dtNum].url, list[dtNum].title, video];
@@ -251,5 +251,5 @@ function deleteNot() {
         })
     });
 }
-// deleteNot()
-getList();
+getDetail()
+// getList();
