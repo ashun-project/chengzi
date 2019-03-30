@@ -48,7 +48,9 @@ html
                         a(href="http://www.liwrml.org.cn", target="_blank")
                             img(src="#{host}/img/#{zd == 'pc'?'pc1': '1'}.png", alt="")
                     div.swiper-slide.red-slide
-                        img(src="#{host}/img/#{zd == 'pc'?'pc2': '2'}.png", alt="")
+                        //- ios下载记得修改
+                        a(href="#{host}/app/android.apk", target="_blank")
+                            img(src="#{host}/img/#{zd == 'pc'?'pc2': '2'}.png", alt="")
                     div.swiper-slide.orange-slide
                         a(href="http://down.3bullshop.com/download.html", target="_blank")
                             img(src="#{host}/img/#{zd == 'pc'?'pc3': '3'}.png", alt="")
@@ -134,7 +136,9 @@ html
         script(type="text/javascript").
             var banner = document.querySelector('.banner');
             var img = document.querySelector('.swiper-wrapper .swiper-slide img');
-            banner.style.height = img.height;
+            img.onload = function () {
+                banner.style.height = img.height;
+            }
             var mySwiper = new Swiper('.swiper-container',{
                 loop: true,
                 autoplay: 5000,

@@ -810,7 +810,14 @@ iframe{
 .swiper-wrapper img{
     max-width: 100%;
 }
+.banner{
+    height: 360px;
+}
+.banner .swiper-container { height:100%}
 @media (max-width:600px) {
+    .banner{
+        height: 136px;
+    }
     .header{
         height: 45px;
         line-height: 45px;
