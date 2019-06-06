@@ -92,7 +92,7 @@ function showMOdel(type) {
     if (myBodyer) {
         myBodyer.setAttribute('id', 'mr-top');
     }
-    continueTest();
+    // continueTest();
     mask.style.display = 'block';
 }
 function getLogin() {
@@ -227,27 +227,27 @@ function continueTest() {
     }
 }
 
-var ev = document.querySelectorAll("video");
-if (ev.length) {
-    for(var j = 0; j < ev.length; j++) {
-        var width = parseInt(ev[j].getAttribute("width"));
-        var height = parseInt(ev[j].getAttribute("height")) - 50;
-        var widthcss = parseInt(ev[j].offsetWidth);
-        var hig = (height / width) * widthcss;
-        ev[j].style.height = hig+"px";
-        ev[j].addEventListener("timeupdate",function(){
-            var timeDisplay;
-            //用秒数来显示当前播放进度
-            timeDisplay = Math.floor(this.currentTime);
-            if(timeDisplay >= 120 && testLook){
-                this.currentTime = 0;
-                this.pause();
-                this.autoplay = false;
-                alert('当前进度以超过，只能试看两分钟哦');
-            }
-        },false);
-    }     
-}
+// var ev = document.querySelectorAll("video");
+// if (ev.length) {
+//     for(var j = 0; j < ev.length; j++) {
+//         var width = parseInt(ev[j].getAttribute("width"));
+//         var height = parseInt(ev[j].getAttribute("height")) - 50;
+//         var widthcss = parseInt(ev[j].offsetWidth);
+//         var hig = (height / width) * widthcss;
+//         ev[j].style.height = hig+"px";
+//         ev[j].addEventListener("timeupdate",function(){
+//             var timeDisplay;
+//             //用秒数来显示当前播放进度
+//             timeDisplay = Math.floor(this.currentTime);
+//             if(timeDisplay >= 120 && testLook){
+//                 this.currentTime = 0;
+//                 this.pause();
+//                 this.autoplay = false;
+//                 alert('当前进度以超过，只能试看两分钟哦');
+//             }
+//         },false);
+//     }     
+// }
 
 
 

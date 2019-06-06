@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset=utf-8 />
+  <title>MP4ToM3U8</title>
+  <style>
+  #my-video{
+    background:#000;width:100%;padding:30px;margin-bottom: 5px;
+  }
+  </style>
+</head>
+<body>
+<div>
+  <div id="my-video" style="width:510px; height:350px;"></div>
+  <div id="chuli" style="display:none">视频正在处理中，过几天在来访问</div>
+</div>
+<script src="http://www.onepussy.club:8282/js/ckplayer/ckplayer.js"></script>
+<script>
+  var url = window.location.search.split('url=');
+  var chuli = document.getElementById('chuli');
+  if (url && url[1]) {
+    var videoObject = {
+      container: '#my-video', //容器的ID或className
+      variable: 'player',//播放函数名称
+      flashplayer: true,
+      poster: '/static/img/ashun.png',//封面图片
+      video: 'http://www.onepussy.club:8282/videos/' + url[1] + '/video.m3u8'//'/videos/0a51c18e13540d1eb0388d6c34acb652/video.m3u8'
+    };
+    var player = new ckplayer(videoObject);
+  } else {
+    chuli.style.display = 'block';
+  }
+  var ajax = new XMLHttpRequest();
+  ajax.open('get', 'http://www.onepussy.club:8282/videos/' + url[1] + '/video.m3u8');
+  ajax.send();
+  ajax.onreadystatechange = function () {
+    if (ajax.status==200) {
+      console.log('success');//输入相应的内容
+  　} else {
+      chuli.style.display = 'block';
+    }
+  }
+  var ev = document.querySelector("#my-video");
+  var width = parseInt(ev.getAttribute("width"));
+  var height = parseInt(ev.getAttribute("height")) - 50;
+  var widthcss = parseInt(ev.offsetWidth);
+  var hig = (height / width) * widthcss;
+  ev.style.height = hig+"px";
+</script>
+</body>
+</html>

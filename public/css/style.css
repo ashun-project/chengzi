@@ -492,6 +492,7 @@ video{background:#000;width:100%;padding:30px;margin-bottom: 5px;}
 iframe{
     width: 100%;
     border: 0;
+    height: 500px;
 }
 .detail h2{
     padding: 10px 0;

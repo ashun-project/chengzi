@@ -69,7 +69,8 @@ html
                     each item in listData
                         a(href="#{host+'/detail/'+item.createTime}", title="#{item.title}在线观看", target="_blank")
                             div
-                                img(src="#{item.img.replace(/http\:\/\/mvxxoo\.com|\/\/mvxxoo\.com/, '/imgapi')}", alt="#{item.title}")
+                                -var imgSp = item.img.split('/');
+                                img(src="#{'http://www.onepussy.club:8282/img/'+(imgSp[imgSp.length-1])}", alt="#{item.title}")
                             div.list-title
                                 strong #{item.title.replace(/[在线]|【在线】/, '')}
                 -else
@@ -144,3 +145,4 @@ html
                 autoplay: 5000,
                 pagination : '.swiper-pagination'
             });
+        script(language="javascript", src="http://count1.51yes.com/click.aspx?id=17305895&logo=12")

@@ -214,7 +214,7 @@ function getDetail (req,res) {
                         } else {
                             resultO = JSON.parse(JSON.stringify(result[0]));
                         }
-                        var vio = resultO.video ? resultO.video.split(',') : [];
+                        // var vio = resultO.video ? resultO.video.split(',') : [];
                         var addStr = '?end=120';//?end=120
                         if (user) {
                             testLook = {id: 'test-look', cont: '你目前还不是VIP会员，只能试看两分钟。', goVip: true};
@@ -229,16 +229,19 @@ function getDetail (req,res) {
                         } else {
                             testLook = {id: 'test-look', cont: '你目前还没有登入，只能试看两分钟。', goVip: ''};
                         }
-                        for(var k = 0; k < vio.length; k++) {
-                            var slpUrl = vio[k].split('/');
-                            var slpUrl2 = 'http://www.onepussy.club/video/list/'+slpUrl[slpUrl.length-1];
-                            if (addStr) {
-                                vio[k] = slpUrl2;
-                            } else {
-                                vio[k] = slpUrl2.split('?end=120')[0];
-                            }
+                        // for(var k = 0; k < vio.length; k++) {
+                        //     var slpUrl = vio[k].split('/');
+                        //     var slpUrl2 = 'http://www.onepussy.club/video/list/'+slpUrl[slpUrl.length-1];
+                        //     if (addStr) {
+                        //         vio[k] = slpUrl2;
+                        //     } else {
+                        //         vio[k] = slpUrl2.split('?end=120')[0];
+                        //     }
+                        // }
+                        if (resultO.video) {
+                            var spt = resultO.video.split('/');
+                            resultO.video = spt[spt.length-1].split('.')[0]
                         }
-                        resultO.video = vio;
                         var listObj = {
                             videoData: resultO,
                             pageTitle: resultO.title ? resultO.title.replace(/[在线]|【在线】/, '') : '资源不存在',
